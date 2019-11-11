@@ -64,8 +64,10 @@ if __name__ == '__main__':
                 r2_dict = eval(r2.text).get('data')
                 home_team = r2_dict.get('homesxname')
                 away_team = r2_dict.get('awaysxname')
+                home_standing = r2_dict.get('homestanding')
+                away_standing = r2_dict.get('awaystanding')
                 league = r2_dict.get('simpleleague')
-                subject = league + ": " + home_team + " VS "+away_team
+                subject = league + ": " + home_team + "(" + home_standing + ")" + " VS " + away_team + "(" + away_standing + ")"
                 message = str(instant_level[0]) + " " + str(instant_level[1]) + " " + str(instant_level[2]) + '\n' + ANALYSIS_URL.format(match[0])
                 send_email(subject, message)
                 print("Send Email Success With ID:" + str(match[0]))
