@@ -54,23 +54,26 @@ if __name__ == '__main__':
             break
     match_list = r0.text.split('\r\n')[1:-2]
     for match in match_list:
-        match = eval(match[:-1])
-        match_timestamp = time.mktime(time.strptime(match[4], '%Y-%m-%d %H:%M:%S'))
-        if 0 <= match_timestamp - time.time() <= 1200:
-            r1 = requests.get(SINGLE_MATCH_URL.format(match[0]))
-            instant_level = eval(r1.text)[0][1]
-            if instant_level[1] == u"半球" or (instant_level[1] == u'平手/半球' and float(instant_level[0]) >= 1):
-                r2 = requests.get(MATCH_INFO_URL.format(match[0]))
-                r2_dict = eval(r2.text).get('data')
-                home_team = r2_dict.get('homesxname')
-                away_team = r2_dict.get('awaysxname')
-                home_standing = r2_dict.get('homestanding')
-                away_standing = r2_dict.get('awaystanding')
-                league = r2_dict.get('simpleleague')
-                subject = league + ": " + home_team + "(" + home_standing + ")" + " VS " + away_team + "(" + away_standing + ")"
-                message = str(instant_level[0]) + " " + str(instant_level[1]) + " " + str(instant_level[2]) + '\n' + ANALYSIS_URL.format(match[0])
-                send_email(subject, message)
-                print("Send Email Success With ID:" + str(match[0]))
+        try:
+            match = eval(match[:-1])
+            match_timestamp = time.mktime(time.strptime(match[4], '%Y-%m-%d %H:%M:%S'))
+            if 0 <= match_timestamp - time.time() <= 1200:
+                r1 = requests.get(SINGLE_MATCH_URL.format(match[0]))
+                instant_level = eval(r1.text)[0][1]
+                if instant_level[1] == u"半球" or (instant_level[1] == u'平手/半球' and float(instant_level[0]) >= 1):
+                    r2 = requests.get(MATCH_INFO_URL.format(match[0]))
+                    r2_dict = eval(r2.text).get('data')
+                    home_team = r2_dict.get('homesxname')
+                    away_team = r2_dict.get('awaysxname')
+                    home_standing = r2_dict.get('homestanding')
+                    away_standing = r2_dict.get('awaystanding')
+                    league = r2_dict.get('simpleleague')
+                    subject = league + ": " + home_team + "(" + home_standing + ")" + " VS " + away_team + "(" + away_standing + ")"
+                    message = str(instant_level[0]) + " " + str(instant_level[1]) + " " + str(instant_level[2]) + '\n' + ANALYSIS_URL.format(match[0])
+                    send_email(subject, message)
+                    print("Send Email Success With ID:" + str(match[0]))
+        except Exception as e:
+            print("Something Error with: " + e)
 
     print("Remind Tool End!")
 
