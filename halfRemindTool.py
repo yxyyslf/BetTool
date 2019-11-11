@@ -69,7 +69,6 @@ if __name__ == '__main__':
                 message = str(instant_level[0]) + " " + str(instant_level[1]) + " " + str(instant_level[2]) + '\n' + ANALYSIS_URL.format(match[0])
                 send_email(subject, message)
                 print("Send Email Success With ID:" + str(match[0]))
-            elif
 
     print("Remind Tool End!")
 
