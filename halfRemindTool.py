@@ -73,7 +73,7 @@ if __name__ == '__main__':
                     send_email(subject, message)
                     print("Send Email Success With ID:" + str(match[0]))
         except Exception as e:
-            print("Something Error with: " + e)
+            print("Something Error with: " + str(e))
 
     print("Remind Tool End!")
 
