@@ -15,7 +15,7 @@ ANALYSIS_URL = "http://odds.500.com/fenxi/shuju-{}.shtml"
 def format_url(i):
     month = str(datetime.datetime.now().month)
     month = month.zfill(2)
-    date = "20"+month+"0"+str(i)
+    date = "20"+month+str(i)
     now = str(time.time()).split(".")[0]
     url = DAILY_MATCH_URL.format(date, now)
     return url
